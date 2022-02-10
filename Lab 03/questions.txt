@@ -1,0 +1,4 @@
+Darren Wang
+CSCI 201
+
+1. O(n)

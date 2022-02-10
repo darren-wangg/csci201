@@ -1,0 +1,17 @@
+Name: Darren Wang
+Lab 02
+
+1.
+  a) true
+  b) false
+2. void
+3. to initialize instance variables for the object
+4. the toString method is used whenever calling System.out.print, if we did not include it then System.out.print would just print a memory location
+5. yes, because we used generic types
+6. the Object base class does not implement the interface we used
+7. arrays are covariant but generics are invariant. Covariant means if X is a subclass of Y, then its array version (X[]) is also a subtype of Y[]
+8. yes, because arrays are covariant
+9.
+  a) false
+  b) false
+  c) true
