@@ -79,9 +79,6 @@ public class WristCuff {
      */
     public void sortShelters() {
         Collections.sort(this.shelters);
-
-        // testing purposes
-        System.out.println(this.shelters);
     }
 
     /**
@@ -105,23 +102,21 @@ public class WristCuff {
                         "=== Chiral frequency " + shelter.getFrequency() + " unstable, Chiral jump unavailable. ===");
                 System.out.println(
                         "=== Removing target shelter from the list of shelters and saving updated list to disk. ===\n");
+
+                // remove from file
                 this.shelters.remove(shelter);
 
                 // read JSON file & parse
                 Gson gson = new GsonBuilder().setPrettyPrinting().create();
-
-                // ??
-                String jsonOutput = gson.toJson(this.shelters);
-
-                // remove from file
-                // obj.remove(shelter);
-
-                // format JSON
-                // https://stackoverflow.com/questions/8596161/json-string-tidy-formatter-for-java
-
-                // resave modified JSON
-                // String output = JSONValue.toJSONString(obj);
-                // Files.write(file, output.getBytes(StandardCharsets.UTF_8));
+                try {
+                    FileWriter file = new FileWriter(this.file_name);
+                    String jsonOutput = gson.toJson(this.shelters);
+                    file.write(jsonOutput);
+                    file.close();
+                } catch (Exception error) {
+                    System.out.println("File writer error: " + error);
+                    System.exit(0);
+                }
 
                 // skip this shelter
                 continue;

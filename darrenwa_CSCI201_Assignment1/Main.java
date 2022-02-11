@@ -19,6 +19,12 @@ public class Main {
 		System.out.print("Please provide timefall shelter data source: ");
 		this.file_name = in.nextLine();
 
+		// empty line, prompt again
+		if (this.file_name.length() == 0) {
+			this.readFile();
+			return;
+		}
+
 		try {
 			// process JSON file
 			Gson gson = new Gson();
@@ -54,6 +60,12 @@ public class Main {
 					throw new NoSuchFieldException("address");
 				}
 
+				// get rid of whitespace
+				shelter.setGuid(shelter.getGuid().trim());
+				shelter.setName(shelter.getName().trim());
+				shelter.setPhone(shelter.getPhone().trim());
+				shelter.setAddy(shelter.getAddy().trim());
+
 				// check if keys have correct data types
 
 				// validate phone number format (use regex)
@@ -72,7 +84,7 @@ public class Main {
 		}
 		// potential errors
 		catch (FileNotFoundException error) {
-			System.err.println("File not found");
+			System.err.println("The file " + this.file_name + " could not be found.");
 			this.readFile();
 			return;
 		} catch (NumberFormatException error) {
@@ -90,13 +102,6 @@ public class Main {
 		}
 
 		System.out.println("=== Data accepted ===");
-
-		// for testing purposes
-		// System.out.println();
-		// System.out.println("PROCESSED SHELTERS:");
-		// for (TimefallShelter shelter : this.shelters) {
-		// System.out.println(shelter);
-		// }
 	}
 
 	/**
@@ -121,10 +126,6 @@ public class Main {
 
 		// initialize WristCuff instance
 		cuff = new WristCuff(frequencies, this.shelters, this.file_name);
-
-		// for testing purposes
-		// System.out.println("WRIST CUFF : \n " + cuff);
-		// System.out.println("FREQS = " + frequencies);
 	}
 
 	/**
@@ -139,11 +140,25 @@ public class Main {
 						+ "5) Jump to a shelter with the lowest supported Chiral frequency");
 
 		System.out.print("Choose an option: ");
-		int option = in.nextInt();
-		// skip the newline
-		in.nextLine();
+		String option_input = in.nextLine();
+
+		// empty line, prompt again
+		if (option_input.length() == 0) {
+			System.out.println("Please enter a valid integer from 1 - 5.");
+			this.displayOptions();
+			return;
+		}
 
 		System.out.println();
+		int option;
+		try {
+			option = Integer.parseInt(option_input);
+		} catch (NumberFormatException error) {
+			System.out.println("Please enter a valid integer from 1 - 5.");
+			this.displayOptions();
+			return;
+		}
+
 		while (true) {
 			boolean foundOption = false;
 
@@ -224,11 +239,17 @@ public class Main {
 
 			// if not option 1 - 5
 			if (!foundOption) {
-				System.out.println("Invalid. Please enter another option: ");
-				option = in.nextInt();
+				System.out.print("Invalid. Please enter another option: ");
+				try {
+					option = in.nextInt();
+				} catch (InputMismatchException error) {
+					in.nextLine();
+					System.out.println("Please enter a valid integer from 1 - 5.");
+					this.displayOptions();
+					return;
+				}
 			} else {
 				this.displayOptions();
-				;
 			}
 		}
 	}

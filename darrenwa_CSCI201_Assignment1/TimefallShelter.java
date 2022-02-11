@@ -22,10 +22,10 @@ public class TimefallShelter implements Comparable<TimefallShelter> {
 			String address) {
 		this.chiralFrequency = chiralFrequency;
 		this.timefall = timefall;
-		this.guid = guid;
-		this.name = name;
-		this.phone = phone;
-		this.address = address;
+		this.guid = guid.trim();
+		this.name = name.trim();
+		this.phone = phone.trim();
+		this.address = address.trim();
 	}
 
 	public int getFrequency() {
@@ -36,16 +36,32 @@ public class TimefallShelter implements Comparable<TimefallShelter> {
 		return this.guid;
 	}
 
+	public void setGuid(String new_guid) {
+		this.guid = new_guid;
+	}
+
 	public String getName() {
 		return this.name;
+	}
+
+	public void setName(String new_name) {
+		this.name = new_name;
 	}
 
 	public String getPhone() {
 		return this.phone;
 	}
 
+	public void setPhone(String new_phone) {
+		this.phone = new_phone;
+	}
+
 	public String getAddy() {
 		return this.address;
+	}
+
+	public void setAddy(String new_addy) {
+		this.address = new_addy;
 	}
 
 	public boolean hasTimefall() {
